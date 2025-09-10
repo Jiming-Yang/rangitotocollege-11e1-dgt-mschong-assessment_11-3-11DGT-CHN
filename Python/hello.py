@@ -31,11 +31,11 @@ while True:
         if useranswer == "stop":
             break
         int(useranswer)
-        if useranswer == actual:
+        if int(useranswer) == int(actual):
             print("Correct!")
             score = score + 1
-        if useranswer != actual: 
+        else: 
             print("Incorrect! try again")
     except ValueError:
-        print("Please enter a number or 'stop' to end the game")
+        print("Please enter a number or 'stop' to end the game.")
 
