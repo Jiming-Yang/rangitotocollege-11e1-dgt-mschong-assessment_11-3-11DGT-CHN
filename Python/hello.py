@@ -21,10 +21,11 @@ if thing == "2":
     print(f"LOSER! you lost {score} dollars")
     
 #game 2: maths quiz
+# please note that i am not done this is only the python
 stop = "stop"
 while True:
     try:
-        no1 = random.randint(1, 20)
+        no1 = random.randint(1, 20) 
         no2 = random.randint(1, 20)
         useranswer = (input(f"What is {no1} + {no2}? "))
         actual = (int(no1) + int(no2))
@@ -39,4 +40,17 @@ while True:
     except ValueError:
         print("Please enter a number or 'stop' to end the game.")
 print(f"you score is {score}")
-#game 3
+#game 3 i havent decided yet
+while True:
+    guess = str(input("Guess a number between 1 and 5 (or type 'stop' to end): "))
+    number = random.randint(1, 5)
+    if guess == "stop":
+        print("Game ended.")
+        break
+    if int(guess) == int(number):
+        print("You guessed right!")
+        score = score + 1
+    else:
+        print(f"Wrong! the number was {number}") 
+
+print(f" your score was {score} points")
