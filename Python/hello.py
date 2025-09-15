@@ -38,4 +38,5 @@ while True:
             print("Incorrect! try again")
     except ValueError:
         print("Please enter a number or 'stop' to end the game.")
-
+print(f"you score is {score}")
+#game 3
