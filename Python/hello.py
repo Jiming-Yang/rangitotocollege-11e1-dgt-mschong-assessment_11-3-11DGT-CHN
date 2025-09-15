@@ -54,4 +54,3 @@ while True:
         print(f"Wrong! the number was {number}") 
 
 print(score)
-
