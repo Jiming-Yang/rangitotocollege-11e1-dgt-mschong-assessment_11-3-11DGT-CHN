@@ -53,4 +53,5 @@ while True:
     else:
         print(f"Wrong! the number was {number}") 
 
-print(f" your score was {score} points")
+print(score)
+
