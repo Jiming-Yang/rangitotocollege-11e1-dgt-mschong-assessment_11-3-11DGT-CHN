@@ -5,8 +5,14 @@ row = 25
 colum = 25
 sqrsize = 25
 #laying out the window
-window_wide = sqrsize * colum
-window_tall = sqrsize * row
+window_wide = sqrsize * colum #(it is 625)
+window_tall = sqrsize * row #(its 625)
+
+class Tile:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
 #window settings
 window = tkinter.Tk()
 window.title("snake")
@@ -15,7 +21,41 @@ window.resizable(False, False)
 canvas = tkinter.Canvas(window, bg = "black", height = window_tall, width = window_wide, borderwidth = 0, highlightthickness = 0)
 canvas.pack()
 window.update()
+#centering window so it looks better
+window_wide = window.winfo_width()
+window_tall = window.winfo_height()
+screen_width = window.winfo_screenwidth()
+screen_height = window.winfo_screenheight()
 
+#the game
+snake = Tile(5*sqrsize, 5*sqrsize) #one tile for the characters head
+coin = Tile(10*sqrsize, 10*sqrsize) #one tile for the coin
+velocity_x = 0
+velocity_y = 0 
+def change_direcion(e): #e for event
+    #print(e.keysym)
+    global velocity_x, velocity_y
+
+    if(e.keysym == "Up"):
+        velocity_x = 0
+        velocity_y = -1
+def draw():
+    global snake
+    #actually drawing the snake (character):
+    canvas.create_rectangle(snake.x, snake.y, snake.x +sqrsize, snake.y + sqrsize, fill = "salmon")
+#drawing the coin
+    canvas.create_oval(coin.x, coin.y, coin.x + sqrsize, coin.y + sqrsize, fill = "yellow")
+
+    window.after(100, draw) #draws again every 0.1 sec (10 frames per sec)
+draw()
+
+
+window_x = float((screen_width/2) - (window_wide/2))
+window_y = float((screen_height/2) - (window_tall/2))
+
+window.geometry(f"{window_wide}x{window_tall}+{int(window_x)}+{int(window_y)}")
+
+window.bind("<KeyRelease>", change_direcion)
 window.mainloop()
 
 
