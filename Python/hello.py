@@ -1,6 +1,26 @@
-import tkinter as tk
+import tkinter
 import random
-from tkinter import *
+
+row = 25
+colum = 25
+sqrsize = 25
+#laying out the window
+window_wide = sqrsize * colum
+window_tall = sqrsize * row
+#window settings
+window = tkinter.Tk()
+window.title("snake")
+window.resizable(False, False)
+#making the canvas (gamemap)
+canvas = tkinter.Canvas(window, bg = "black", height = window_tall, width = window_wide, borderwidth = 0, highlightthickness = 0)
+canvas.pack()
+window.update()
+
+window.mainloop()
+
+
+
+"""from tkinter import *
 r = tk.Tk()
 r.title('Home Page')
 button = tk.Button(r, text='Stop', width=25, command=r.destroy)
@@ -54,4 +74,4 @@ while True:
         print(f"Wrong! the number was {number}") 
 
 print(f"{score} points")
-print("the end")
+print("the end")"""
