@@ -39,8 +39,26 @@ def change_direcion(e): #e for event
     if(e.keysym == "Up"):
         velocity_x = 0
         velocity_y = -1
+    elif(e.keysym == "Down"):
+        velocity_x = 0
+        velocity_y = 1 
+    elif(e.keysym == "Left"):
+        velocity_x = -1
+        velocity_y = 0
+    elif(e.keysym == "Right"):
+        velocity_x = 1
+        velocity_y = 0
+
+def move():
+    global snake
+
+    snake.x +=  velocity_x * sqrsize #if i dont multiply by sqrsize it will move 1 pixel instead of a square
+    snake.y +=  velocity_y * sqrsize
 def draw():
     global snake
+
+    move()
+    canvas.delete("all")
     #actually drawing the snake (character):
     canvas.create_rectangle(snake.x, snake.y, snake.x +sqrsize, snake.y + sqrsize, fill = "salmon")
 #drawing the coin
