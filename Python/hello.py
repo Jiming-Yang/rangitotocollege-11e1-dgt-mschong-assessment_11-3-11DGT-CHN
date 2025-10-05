@@ -30,27 +30,45 @@ screen_height = window.winfo_screenheight()
 #the game
 snake = Tile(5*sqrsize, 5*sqrsize) #one tile for the characters head
 coin = Tile(10*sqrsize, 10*sqrsize) #one tile for the coin
+snake_body = []
 velocity_x = 0
 velocity_y = 0 
 def change_direcion(e): #e for event
     #print(e.keysym)
     global velocity_x, velocity_y
 
-    if(e.keysym == "Up"):
+    if(e.keysym == "Up" and velocity_y != 1):
         velocity_x = 0
         velocity_y = -1
-    elif(e.keysym == "Down"):
+    elif(e.keysym == "Down" and velocity_y != -1):
         velocity_x = 0
         velocity_y = 1 
-    elif(e.keysym == "Left"):
+    elif(e.keysym == "Left" and velocity_x != 1):
         velocity_x = -1
         velocity_y = 0
-    elif(e.keysym == "Right"):
+    elif(e.keysym == "Right" and velocity_x != -1):
         velocity_x = 1
         velocity_y = 0
-
+    elif(e.keysym == "w" and velocity_y != 1):
+        velocity_x = 0
+        velocity_y = -1
+    elif(e.keysym == "s" and velocity_y != -1):
+        velocity_x = 0
+        velocity_y = 1
+    elif(e.keysym == "a" and velocity_x != 1):
+        velocity_x = -1
+        velocity_y = 0
+    elif(e.keysym == "d" and velocity_x != -1):
+        velocity_x = 1
+        velocity_y = 0
+s
 def move():
     global snake
+    #checking for collison with coin
+    if (snake.x == coin.x and snake.y == coin.y):
+        snake_body.append(Tile(coin.x, coin.y))
+        coin.x = random.randint(0, colum - 1) * sqrsize
+        coin.y = random.randint(0, row - 1) * sqrsize
 
     snake.x +=  velocity_x * sqrsize #if i dont multiply by sqrsize it will move 1 pixel instead of a square
     snake.y +=  velocity_y * sqrsize
@@ -59,10 +77,13 @@ def draw():
 
     move()
     canvas.delete("all")
+    #drawing the coin
+    canvas.create_oval(coin.x, coin.y, coin.x + sqrsize, coin.y + sqrsize, fill = "yellow")
     #actually drawing the snake (character):
     canvas.create_rectangle(snake.x, snake.y, snake.x +sqrsize, snake.y + sqrsize, fill = "salmon")
-#drawing the coin
-    canvas.create_oval(coin.x, coin.y, coin.x + sqrsize, coin.y + sqrsize, fill = "yellow")
+    #adding to the body evertyime a colision happens
+    for i in snake_body:
+        canvas.create_rectangle(i.x, i.y, i.x + sqrsize, i.y + sqrsize, fill = "salmon")
 
     window.after(100, draw) #draws again every 0.1 sec (10 frames per sec)
 draw()
