@@ -33,11 +33,16 @@ coin = Tile(10*sqrsize, 10*sqrsize) #one tile for the coin
 snake_body = []
 velocity_x = 0
 velocity_y = 0 
+die = False
+money = 0
+
 def change_direcion(e): #e for event
     #print(e.keysym)
-    global velocity_x, velocity_y
+    global velocity_x, velocity_y, die
+    if (die):
+        return
 
-    if(e.keysym == "Up" and velocity_y != 1):
+    if(e.keysym == "Up" and velocity_y != 1): #it makes sure that you cannot go up then down straight away or right and left etc.
         velocity_x = 0
         velocity_y = -1
     elif(e.keysym == "Down" and velocity_y != -1):
@@ -61,19 +66,41 @@ def change_direcion(e): #e for event
     elif(e.keysym == "d" and velocity_x != -1):
         velocity_x = 1
         velocity_y = 0
-s
+
 def move():
-    global snake
+    global snake, coin, snake_body, die
+    if (die):
+        return
+    if (snake.x < 0 or snake.x >= window_wide or snake.y < 0 or snake.y >= window_tall):
+        die = True
+        return
+    for i in snake_body:
+        if (snake.x == i.x and snake.y == i.y):
+            die = True
+            return  
     #checking for collison with coin
     if (snake.x == coin.x and snake.y == coin.y):
         snake_body.append(Tile(coin.x, coin.y))
         coin.x = random.randint(0, colum - 1) * sqrsize
         coin.y = random.randint(0, row - 1) * sqrsize
+        
+        #updating snake body making it follow the train of squares
+    for x in range(len(snake_body)-1, -1, -1):
+        tile = snake_body[x]
+        if (x == 0):
+            tile.x = snake.x
+            tile.y = snake.y
+        else:
+            prev_tile = snake_body[x - 1]
+            tile.x = prev_tile.x
+            tile.y = prev_tile.y
+    
 
     snake.x +=  velocity_x * sqrsize #if i dont multiply by sqrsize it will move 1 pixel instead of a square
     snake.y +=  velocity_y * sqrsize
 def draw():
-    global snake
+    global snake, coin, snake_body, die
+
 
     move()
     canvas.delete("all")
@@ -85,6 +112,10 @@ def draw():
     for i in snake_body:
         canvas.create_rectangle(i.x, i.y, i.x + sqrsize, i.y + sqrsize, fill = "salmon")
 
+    if (die):
+        canvas.create_text(window_wide/2, window_tall/2, text = "You Died!", fill = "white", font = ("comic sans", 50))
+    else:
+        canvas.create_text(30, 10, text = f"Score: {len(snake_body)}", fill = "white", font = ("comic sans", 20))
     window.after(100, draw) #draws again every 0.1 sec (10 frames per sec)
 draw()
 
