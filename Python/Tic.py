@@ -15,10 +15,35 @@ def next_turn(row, column):
                 label.config(text= players[0] + " wins") #if there is a winner
             elif check_winner() == "Tie":
                 label.config(text= "tie")
+        else: # if it is not player ones turn (player 2 turn)
+            buttons[row][column]["text"] = player
+            
+            if check_winner() is False: #so if there is no winner
+                player = players[0] #i am swapping the player's turn
+                label.config(text= players[0] + " turn")
+            elif check_winner() is True:
+                label.config(text= players[1] + " wins") #if there is a winner
+            elif check_winner() == "Tie":
+                label.config(text= "tie")
+
         
 
 def check_winner():
-    pass
+#im basically checking if all the cooordnates are filled or not
+    #horizontal win condition
+    for row in range(3): # if there is 3 in row
+        if buttons[row][0]["text"] == buttons[row][1]["text"] == buttons[row][2] != "":
+            return True
+ #vertical
+    for column in range(3):
+        if buttons[0][column]["text"] == buttons[1][column]["text"] == buttons[2][column] != "":
+                return True
+    
+  #diagonal both ways dont need loop bc only 2 way digaanol can go
+    if buttons[0][0]["text"] == buttons[1][1]["text"] == buttons[2][2]["text"] != "":
+        return true
+    elif buttons[0][2]["text"] == buttons[1][1]["text"] == buttons[2][0]["text"] != "":
+        return true
 def empty_spaces():
     pass
 def new_game():
@@ -28,7 +53,7 @@ window = Tk()
 window.title("Tic Tac Toe")
 players = ["x", "o"]
 player = random.choice(players) #randomising who go first
-buttons = [[0,0,0],  #i put them in this format so i can visualise what it kinda look like
+buttons = [[0,0,0],  #i put them in this format so i can visualise what it kinda look like i basically use this as coordinates
            [0,0,0],
            [0,0,0]]
 label = Label(text= player + " turn", font= ("Arial", 40)) #to see who go first
