@@ -1,4 +1,4 @@
- from tkinter import *
+from tkinter import *
 import random
 
 def next_turn(row, column):
@@ -10,9 +10,9 @@ def next_turn(row, column):
             
             if check_winner() is False: #so if there is no winner
                 player = players[1] #i am swapping the player's turn
-                label.config(text= players[1] + " turn")
+                label.config(text= (players[1] + " turn"))
             elif check_winner() is True:
-                label.config(text= players[0] + " wins") #if there is a winner
+                label.config(text= (players[0] + " wins")) #if there is a winner
             elif check_winner() == "Tie":
                 label.config(text= "tie")
         else: # if it is not player ones turn (player 2 turn)
@@ -20,9 +20,9 @@ def next_turn(row, column):
             
             if check_winner() is False: #so if there is no winner
                 player = players[0] #i am swapping the player's turn
-                label.config(text= players[0] + " turn")
+                label.config(text= (players[0] + " turn"))
             elif check_winner() is True:
-                label.config(text= players[1] + " wins") #if there is a winner
+                label.config(text= (players[1] + " wins")) #if there is a winner
             elif check_winner() == "Tie":
                 label.config(text= "tie")
 
@@ -32,18 +32,22 @@ def check_winner():
 #im basically checking if all the cooordnates are filled or not
     #horizontal win condition
     for row in range(3): # if there is 3 in row
-        if buttons[row][0]["text"] == buttons[row][1]["text"] == buttons[row][2] != "":
+        if buttons[row][0]["text"] == buttons[row][1]["text"] == buttons[row][2]["text"] != "":
             return True
  #vertical
     for column in range(3):
-        if buttons[0][column]["text"] == buttons[1][column]["text"] == buttons[2][column] != "":
+        if buttons[0][column]["text"] == buttons[1][column]["text"] == buttons[2][column]["text"] != "":
                 return True
     
   #diagonal both ways dont need loop bc only 2 way digaanol can go
     if buttons[0][0]["text"] == buttons[1][1]["text"] == buttons[2][2]["text"] != "":
-        return true
+        return True
     elif buttons[0][2]["text"] == buttons[1][1]["text"] == buttons[2][0]["text"] != "":
-        return true
+        return True
+    elif empty_spaces() is False: #if there is no empty spaces and no winner then it is a tie
+        return "Tie"
+    else:
+        return False
 def empty_spaces():
     pass
 def new_game():
@@ -67,7 +71,7 @@ frame.pack()
 
 for i in range(3): #3 because there are 3 rows the i in the loop represents row
     for c in range(3):#3 because 3 collumns the c represents column
-        buttons[i][c] = Button(frame, text="", font=("Arial", 40), width=5, height=2, command= lambda row=i, column=c: next_turn(i.c)) #note to self, lambda is just a short function that too lazy to define
+        buttons[i][c] = Button(frame, text="", font=("Arial", 40), width=5, height=2, command= lambda row=i, column=c: next_turn(i,c)) #note to self, lambda is just a short function that too lazy to define
         buttons[i][c].grid(row=i, column=c)
 
 window.mainloop()
