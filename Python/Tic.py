@@ -69,9 +69,9 @@ again.pack(side="top")
 frame = Frame(window)
 frame.pack()
 
-for i in range(3): #3 because there are 3 rows the i in the loop represents row
-    for c in range(3):#3 because 3 collumns the c represents column
-        buttons[i][c] = Button(frame, text="", font=("Arial", 40), width=5, height=2, command= lambda row=i, column=c: next_turn(i,c)) #note to self, lambda is just a short function that too lazy to define
-        buttons[i][c].grid(row=i, column=c)
+for row in range(3): #3 because there are 3 rows the i in the loop represents row
+    for column in range(3):#3 because 3 collumns the c represents column
+        buttons[row][column] = Button(frame, text="", font=("Arial", 40), width=5, height=2, command= lambda row=row, column=column: next_turn(row,column)) #note to self, lambda is just a short function that too lazy to define
+        buttons[row][column].grid(row=row, column=column)
 
 window.mainloop()
