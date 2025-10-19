@@ -33,25 +33,56 @@ def check_winner():
     #horizontal win condition
     for row in range(3): # if there is 3 in row
         if buttons[row][0]["text"] == buttons[row][1]["text"] == buttons[row][2]["text"] != "":
+            buttons[row][0].config(bg="blue")  #this is to make it visually better and more clear that somone won
+            buttons[row][1].config(bg="blue")
+            buttons[row][2].config(bg="blue")
             return True
  #vertical
     for column in range(3):
         if buttons[0][column]["text"] == buttons[1][column]["text"] == buttons[2][column]["text"] != "":
-                return True
+            buttons[0][column].config(bg="blue")
+            buttons[1][column].config(bg="blue")
+            buttons[2][column].config(bg="blue")
+            return True
     
   #diagonal both ways dont need loop bc only 2 way digaanol can go
     if buttons[0][0]["text"] == buttons[1][1]["text"] == buttons[2][2]["text"] != "":
+        buttons[0][0].config(bg="blue")
+        buttons[1][1].config(bg="blue")
+        buttons[2][2].config(bg="blue")
         return True
     elif buttons[0][2]["text"] == buttons[1][1]["text"] == buttons[2][0]["text"] != "":
+        buttons[0][2].config(bg="blue")
+        buttons[1][1].config(bg="blue")
+        buttons[2][0].config(bg="blue")
         return True
     elif empty_spaces() is False: #if there is no empty spaces and no winner then it is a tie
+        for row in range(3):
+            for column in range(3):
+                buttons[row][column].config(bg="purple") #to make it clear its tie and also look cool
         return "Tie"
     else:
         return False
 def empty_spaces():
-    pass
+    spaces = 9 #when this is 0 the game end and tie
+    for row in range(3):
+        for column in range(3):
+            if buttons[row][column]["text"] != "":
+                spaces -=1 #note to self -= is just spaces = spaces -1
+
+    #check if there no spaces left
+    if spaces ==0:
+        return False
+    else:
+        return True
+    
 def new_game():
-    pass
+    global player
+    player = random.choice(players) #random new player
+    label.config(text= player + " turn:")
+    for row in range(3):
+        for column in range(3):
+            buttons[row][column].config(text="", bg="white") #reset buttons and colour
 
 window = Tk()
 window.title("Tic Tac Toe")
