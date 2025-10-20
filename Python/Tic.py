@@ -1,6 +1,7 @@
 from tkinter import *
 import random
-
+p1scre = 0
+p2scre = 0
 def next_turn(row, column):
     global player
     if buttons[row][column]["text"] == "" and check_winner() is False:
@@ -13,6 +14,7 @@ def next_turn(row, column):
                 label.config(text= (players[1] + " turn"))
             elif check_winner() is True:
                 label.config(text= (players[0] + " wins")) #if there is a winner
+                p1scre +=1
             elif check_winner() == "Tie":
                 label.config(text= "tie")
         else: # if it is not player ones turn (player 2 turn)
@@ -23,6 +25,7 @@ def next_turn(row, column):
                 label.config(text= (players[0] + " turn"))
             elif check_winner() is True:
                 label.config(text= (players[1] + " wins")) #if there is a winner
+                p2scre +=1
             elif check_winner() == "Tie":
                 label.config(text= "tie")
 
@@ -104,5 +107,7 @@ for row in range(3): #3 because there are 3 rows the i in the loop represents ro
     for column in range(3):#3 because 3 collumns the c represents column
         buttons[row][column] = Button(frame, text="", font=("Arial", 40), width=5, height=2, command= lambda row=row, column=column: next_turn(row,column)) #note to self, lambda is just a short function that too lazy to define
         buttons[row][column].grid(row=row, column=column)
+
+
 
 window.mainloop()

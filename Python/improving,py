@@ -84,7 +84,7 @@ def move():
         snake_body.append(Tile(coin.x, coin.y))
 
         #TIME FOR POOP
-        if len(snake_body)>0: #idk why i added the if
+        if len(snake_body)>1:
             poop_location = snake_body[-2]
             poop.append(Tile(poop_location.x, poop_location.y))
         coin.x = random.randint(0, colum - 1) * sqrsize
